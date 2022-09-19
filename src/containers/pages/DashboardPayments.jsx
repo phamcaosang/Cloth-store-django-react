@@ -76,11 +76,12 @@ const DashboardPayments =({
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
-    useEffect(() => {
-        get_items()
-        get_total()
-        get_item_total()
-        list_orders()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(async () => {
+        await get_items()
+        await get_total()
+        await get_item_total()
+        await list_orders()
     }, [])
 
     if(!isAuthenticated)

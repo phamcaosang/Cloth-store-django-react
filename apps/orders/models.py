@@ -41,6 +41,7 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    size = models.CharField(max_length=255, default="s")
     price = models.DecimalField(max_digits=5, decimal_places=2)
     count = models.IntegerField()
     date_added = models.DateTimeField(default=datetime.now)

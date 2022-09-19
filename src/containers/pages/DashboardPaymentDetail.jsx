@@ -27,7 +27,6 @@ import {
 } from '@heroicons/react/outline'
 import { SearchIcon } from '@heroicons/react/solid'
 import { Link } from 'react-router-dom';
-import moment from 'moment'
 
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -164,14 +163,13 @@ const DashboardPaymentDetail =({
                 to="/"
                 className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-                Regresar
-            </Link>
-            
               <img
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
                 alt="Workflow"
               />
+            </Link>
+            
               
             </div>
             <div className="mt-5 flex-grow flex flex-col">
@@ -279,7 +277,7 @@ const DashboardPaymentDetail =({
         <div className="text-sm border-b border-gray-200 mt-2 pb-5 sm:flex sm:justify-between">
           <dl className="flex">
             <dt className="text-gray-500">Transaction ID: &nbsp;</dt>
-            <dd className="font-medium text-gray-900">{order.transaction_id}</dd>
+            <dd className="font-medium text-gray-900">{order?.transaction_id}</dd>
             <dt>
               <span className="sr-only">Date</span>
               <span className="text-gray-400 mx-2" aria-hidden="true">
@@ -287,7 +285,7 @@ const DashboardPaymentDetail =({
               </span>
             </dt>
             <dd className="font-medium text-gray-900">
-              <time dateTime="2021-03-22">March 22, 2021</time>
+              <time dateTime="2021-03-22">{order?.date_issued}</time>
             </dd>
           </dl>
         </div>
@@ -296,42 +294,44 @@ const DashboardPaymentDetail =({
           <h2 className="sr-only">Products purchased</h2>
 
           <div className="space-y-24">
-            {order.order_items.map((product) => (
               <div
-              key={product.id}
-              className="grid grid-cols-1 text-sm sm:grid-rows-1 sm:grid-cols-12 sm:gap-x-6 md:gap-x-8 lg:gap-x-8"
+              className="grid grid-cols-1 text-sm sm:grid-rows-1  sm:gap-x-6 md:gap-x-8 lg:gap-x-8"
             >
-              
-
-              <div className="mt-6 sm:col-span-7 sm:mt-0 md:row-end-1">
-                <h3 className="text-lg font-medium text-gray-900">
-                  <Link to={`/product/${product.id}`}>{product.name}</Link>
-                </h3>
-                <p className="font-medium text-gray-900 mt-1">Transaction ID: {product.transaction_id}</p>
-                <p className="text-gray-500 mt-3">{product.description}</p>
+              <div>
+                {
+                  order?.order_items.map(product => 
+                  <div className="mt-6 sm:mt-0 w-full">
+                    <h3 className="text-lg font-medium text-gray-900 pt-5">
+                      <Link to={`/product/${product.id}`}>{product.name}</Link>
+                    </h3>
+                    <p className="font-medium text-gray-500 mt-1">Size: {product.size}</p>
+                    <p className="font-medium text-gray-500 mt-1">Quantity: {product.count}</p>
+                    <p className="font-medium text-gray-500 mt-1">Unit price: {product.price}</p>
+                </div>)
+              }
               </div>
               <div className="sm:col-span-12 md:col-span-7">
                 <dl className="grid grid-cols-1 gap-y-8 border-b py-8 border-gray-200 sm:grid-cols-2 sm:gap-x-6 sm:py-6 md:py-10">
                   <div>
                     <dt className="font-medium text-gray-900">Delivery address</dt>
                     <dd className="mt-3 text-gray-500">
-                      <span className="block">{product.address_line_1}</span>
-                      <span className="block">{product.address_line_2}</span>
+                      <span className="block">{order?.address_line_1}</span>
+                      <span className="block">{order?.address_line_2}</span>
                     </dd>
                   </div>
                   <div>
                     <dt className="font-medium text-gray-900">Shipping</dt>
                     <dd className="mt-3 text-gray-500 space-y-3">
-                      <p>$ {product.shipping_price}</p>
-                      <p>$ {product.amount} Total Cost</p>
+                      <p>$ {order?.shipping_price}</p>
+                      <p>$ {order?.amount} Total Cost</p>
                       
                     </dd>
                   </div>
                 </dl>
                 <p className="font-medium text-gray-900 mt-6 md:mt-10">
-                  Status: {product.status}
+                  Status: {order?.status}
                 </p>
-                <div className="mt-6">
+                {/* <div className="mt-6">
                   <div className="bg-gray-200 rounded-full overflow-hidden">
                     <div
                       className="h-2 bg-indigo-600 rounded-full"
@@ -350,10 +350,9 @@ const DashboardPaymentDetail =({
                       Delivered
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
-            ))}
           </div>
         </div>
 

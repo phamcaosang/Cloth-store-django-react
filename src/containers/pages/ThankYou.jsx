@@ -8,8 +8,9 @@ const ThankYou = ({
     reset
 }) => {
 
-    useEffect(() => {
-        reset()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(async() => {
+        await reset()
     }, [])
 
     if(!isAuthenticated)

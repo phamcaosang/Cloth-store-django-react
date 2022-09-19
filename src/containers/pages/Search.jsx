@@ -92,9 +92,10 @@ const Search = ({
       order
     } = formData
 
-    useEffect(() => {
-        get_categories()
-        get_products()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(async() => {
+        await get_categories()
+        await get_products()
         window.scrollTo(0,0)
     }, [])
 

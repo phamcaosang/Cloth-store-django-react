@@ -22,7 +22,9 @@ import DropIn from 'braintree-web-drop-in-react';
 import Loader from 'react-loader-spinner';
 import {countries} from '../../helpers/fixedCountries'
 import ShippingForm from '../../components/checkout/ShippingForm'
-
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 const Checkout = ({
     isAuthenticated, 
     items,
@@ -118,25 +120,25 @@ const Checkout = ({
 
     const apply_coupon = async e => {
       e.preventDefault();
-
         check_coupon(coupon_name);
     };
 
-    useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(async() => {
       window.scrollTo(0,0)
-      get_shipping_options()
+      await sleep(2000);
+      await get_client_token();
+      await get_shipping_options();
   }, [])
 
+  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async() => {
-      await get_client_token();
-  }, [user]);
-  
-  useEffect(() => {
+    await sleep(1000);
     if (coupon && coupon !== null && coupon !== undefined)
-        get_payment_total(shipping_id, coupon.name);
+        await get_payment_total(shipping_id, coupon.name);
     else
-        get_payment_total(shipping_id, 'default');
+        await get_payment_total(shipping_id, 'default');
   }, [shipping_id, coupon]);
 
     const [render, setRender] = useState(false);

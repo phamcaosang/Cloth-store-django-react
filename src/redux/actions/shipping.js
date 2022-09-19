@@ -18,14 +18,18 @@ export const get_shipping_options = () => async dispatch => {
                 type: GET_SHIPPING_OPTIONS_SUCCESS,
                 payload: res.data
             });
+            console.log("Shipping success")
         } else {
             dispatch({
                 type: GET_SHIPPING_OPTIONS_FAIL
             });
+            console.log("Shipping failed")
+
         }
     } catch(err) {
         dispatch({
             type: GET_SHIPPING_OPTIONS_FAIL
         });
+        console.log("Shipping failed")
     }
 };
