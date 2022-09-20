@@ -6,6 +6,7 @@ import {
     get_total,
     get_item_total
 } from "../../redux/actions/cart";
+import { logout } from '../../redux/actions/auth'
 import { useEffect } from 'react';
 import { Navigate } from 'react-router';
 import DashboardLink from '../../components/dashboard/DashboardLink';
@@ -26,12 +27,13 @@ import {
 import { SearchIcon } from '@heroicons/react/solid'
 import { Link } from 'react-router-dom';
 import { countries } from '../../helpers/fixedCountries';
-import { update_user_profile } from '../../redux/actions/profile';
+import { update_user_profile, get_user_profile } from '../../redux/actions/profile';
 import Loader from 'react-loader-spinner';
+import toast from 'react-hot-toast';
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Your Profile', href: '#', eventClick: false },
+  { name: 'Settings', href: '#', eventClick: false },
+  { name: 'Sign out', href: '#', eventClick: true},
 ]
 
 function classNames(...classes) {
@@ -39,11 +41,8 @@ function classNames(...classes) {
 }
 
 const DashboardProfile =({
-    list_orders,
-    get_items,
-    get_total,
-    get_item_total,
-    orders,
+    logout,
+    get_user_profile,
     isAuthenticated,
     user,
     update_user_profile,
@@ -55,10 +54,7 @@ const DashboardProfile =({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async() => {
-        await get_items()
-        await get_total()
-        await get_item_total()
-        await list_orders()
+        await get_user_profile()
     }, [])
 
     const [formData, setFormData] = useState({
@@ -86,11 +82,13 @@ const DashboardProfile =({
     } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    const onSubmit = e => {
+    const handleLogout = ()=>{
+      logout()
+    }
+    const onSubmit = async (e) => {
       e.preventDefault();
       setLoading(true)
-      update_user_profile(
+      await update_user_profile(
           address_line_1,
           address_line_2,
           city,
@@ -101,6 +99,7 @@ const DashboardProfile =({
       );
       setLoading(false)
       window.scrollTo(0, 0);
+      toast.success("Profile updated")
   };
 
     if(!isAuthenticated)
@@ -266,6 +265,7 @@ const DashboardProfile =({
                         <Menu.Item key={item.name}>
                           {({ active }) => (
                             <a
+                              onClick={item.eventClick && handleLogout}
                               href={item.href}
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
@@ -305,7 +305,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='address_line_1'
-                      placeholder={`${profile?.address_line_1}`}
+                      placeholder={`${!profile ? "" : profile.address_line_1}`}
                       onChange={e => onChange(e)}
                       value={address_line_1}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -324,7 +324,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='address_line_2'
-                      placeholder={`${profile?.address_line_2}`}
+                      placeholder={`${!profile ? "" : profile.address_line_2}`}
                       onChange={e => onChange(e)}
                       value={address_line_2}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -343,7 +343,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='city'
-                      placeholder={`${profile?.city}`}
+                      placeholder={`${!profile ? "" : profile.city}`}
                       onChange={e => onChange(e)}
                       value={city}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -362,7 +362,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='state_province_region'
-                            placeholder={`${profile?.state_province_region}`}
+                            placeholder={`${!profile ? "" : profile.state_province_region}`}
                             onChange={e => onChange(e)}
                             value={state_province_region}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -381,7 +381,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='zipcode'
-                            placeholder={`${profile?.zipcode}`}
+                            placeholder={`${!profile ? "" : profile.zipcode}`}
                             onChange={e => onChange(e)}
                             value={zipcode}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -400,7 +400,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='phone'
-                            placeholder={`${profile?.phone}`}
+                            placeholder={`${!profile ? "" : profile.phone}`}
                             onChange={e => onChange(e)}
                             value={phone}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -420,7 +420,7 @@ const DashboardProfile =({
                             onChange={e => onChange(e)}
                             style = {{padding: "4px"}}
                         >
-                            <option value={country_region}>{profile?.country_region}</option>
+                            <option value={country_region}>{!profile ? "" : profile.country_region}</option>
                             {
                                 countries && countries.map((country, index) => (
                                     <option key={index} value={country.name}>{country.name}</option>
@@ -464,9 +464,7 @@ const mapStateToProps =state=>({
 })
 
 export default connect(mapStateToProps,{
-    list_orders,
-    get_items,
-    get_total,
-    get_item_total,
+    logout,
+    get_user_profile  ,
     update_user_profile
 }) (DashboardProfile)

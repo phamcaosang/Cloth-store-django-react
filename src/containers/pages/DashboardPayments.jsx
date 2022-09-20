@@ -11,6 +11,7 @@ import { Navigate } from 'react-router';
 import DashboardLink from '../../components/dashboard/DashboardLink';
 import { Fragment, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
+import { logout } from '../../redux/actions/auth'
 import {
   BellIcon,
   CalendarIcon,
@@ -35,9 +36,9 @@ const navigation = [
   { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Your Profile', href: '#', eventClick: false },
+  { name: 'Settings', href: '#', eventClick: false },
+  { name: 'Sign out', href: '#', eventClick: true},
 ]
 
 const products = [
@@ -64,7 +65,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
 const DashboardPayments =({
+    logout,
     list_orders,
     get_items,
     get_total,
@@ -75,7 +78,9 @@ const DashboardPayments =({
 })=>{
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
-
+    const handleLogout = ()=>{
+      logout()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
         await get_items()
@@ -246,6 +251,7 @@ const DashboardPayments =({
                         <Menu.Item key={item.name}>
                           {({ active }) => (
                             <a
+                              onClick={item.eventClick && handleLogout}
                               href={item.href}
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
@@ -383,8 +389,9 @@ const mapStateToProps =state=>({
 })
 
 export default connect(mapStateToProps,{
+    logout,
     list_orders,
     get_items,
     get_total,
-    get_item_total
+    get_item_total,
 }) (DashboardPayments)

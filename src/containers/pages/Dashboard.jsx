@@ -1,11 +1,7 @@
 import Layout from '../../hocs/Layout'
+import { logout } from '../../redux/actions/auth';
+import { load_user } from '../../redux/actions/auth';
 import { connect } from 'react-redux'
-import {list_orders} from '../../redux/actions/orders'
-import {
-    get_items,
-    get_total,
-    get_item_total
-} from "../../redux/actions/cart";
 import { useEffect } from 'react';
 import { Navigate } from 'react-router';
 import DashboardLink from '../../components/dashboard/DashboardLink';
@@ -34,9 +30,9 @@ const navigation = [
   { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Your Profile', href: '#', eventClick: false },
+  { name: 'Settings', href: '#', eventClick: false },
+  { name: 'Sign out', href: '#', eventClick: true},
 ]
 
 function classNames(...classes) {
@@ -44,23 +40,19 @@ function classNames(...classes) {
 }
 
 const Dashboard =({
-    list_orders,
-    get_items,
-    get_total,
-    get_item_total,
-    orders,
+    logout,
+    load_user,
     isAuthenticated,
     user
 })=>{
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const handleLogout = ()=>{
+      logout()
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async() => {
-        await get_items()
-        await get_total()
-        await get_item_total()
-        await list_orders()
     }, [])
 
     if(!isAuthenticated)
@@ -225,6 +217,7 @@ const Dashboard =({
                         <Menu.Item key={item.name}>
                           {({ active }) => (
                             <a
+                            onClick={item.eventClick && handleLogout}
                               href={item.href}
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
@@ -291,8 +284,6 @@ const mapStateToProps =state=>({
 })
 
 export default connect(mapStateToProps,{
-    list_orders,
-    get_items,
-    get_total,
-    get_item_total
+  logout,
+  load_user
 }) (Dashboard)

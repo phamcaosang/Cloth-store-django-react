@@ -2,6 +2,7 @@ import Layout from '../../hocs/Layout'
 import { connect } from 'react-redux'
 import {list_orders} from '../../redux/actions/orders'
 import { useParams } from 'react-router';
+import { logout } from '../../redux/actions/auth'
 import {
     get_items,
     get_total,
@@ -29,9 +30,9 @@ import { SearchIcon } from '@heroicons/react/solid'
 import { Link } from 'react-router-dom';
 
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Your Profile', href: '#', eventClick: false },
+  { name: 'Settings', href: '#', eventClick: false },
+  { name: 'Sign out', href: '#', eventClick: true},
 ]
 
 const products = [
@@ -59,6 +60,7 @@ function classNames(...classes) {
 }
 
 const DashboardPaymentDetail =({
+    logout,
     list_orders,
     get_items,
     get_total,
@@ -80,6 +82,9 @@ const DashboardPaymentDetail =({
     }, [transaction_id])
 
     console.log(order)
+    const handleLogout = ()=>{
+      logout()
+    }
     
 
     if(!isAuthenticated)
@@ -244,6 +249,7 @@ const DashboardPaymentDetail =({
                         <Menu.Item key={item.name}>
                           {({ active }) => (
                             <a
+                            onClick={item.eventClick && handleLogout}
                               href={item.href}
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
@@ -385,6 +391,7 @@ const mapStateToProps =state=>({
 })
 
 export default connect(mapStateToProps,{
+    logout,
     list_orders,
     get_items,
     get_total,

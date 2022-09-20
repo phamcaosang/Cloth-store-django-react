@@ -104,10 +104,12 @@ export default function Auth(state = initialState, action) {
         case LOGOUT:
             localStorage.removeItem('access')
             localStorage.removeItem('refresh')
+            AccessToken.token = localStorage.getItem("access")
+            RefreshToken.token = localStorage.getItem("refresh")
             return {
                 ...state,
-                access :null,
-                refresh:null,
+                access: null,
+                refresh: null,
                 isAuthenticated: false,
                 user: null,
             }
