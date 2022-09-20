@@ -17,9 +17,10 @@ DEBUG = False
 DOMAIN = os.environ.get('DOMAIN')
 
 ALLOWED_HOSTS = [
-    ".vudera.com",
-    "vudera.com",
-    "www.vudera.com",
+    "https://sama-cloth.onrender.com",
+    "sama-cloth.onrender.com",
+    "https://django-shop.netlify.app",
+    "django-shop.netlify.app"
     "127.0.0.1",
     "localhost",
     ]
