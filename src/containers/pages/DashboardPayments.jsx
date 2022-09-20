@@ -277,7 +277,7 @@ const DashboardPayments =({
         <div className="mt-8">
            
           <div className="space-y-12">
-            {orders.map((product) => (
+            {orders && orders.map((product) => (
 
               <>
                <h2 className="sr-only">Products purchased</h2>

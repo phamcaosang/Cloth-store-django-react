@@ -305,7 +305,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='address_line_1'
-                      placeholder={`${profile.address_line_1}`}
+                      placeholder={`${profile?.address_line_1}`}
                       onChange={e => onChange(e)}
                       value={address_line_1}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -324,7 +324,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='address_line_2'
-                      placeholder={`${profile.address_line_2}`}
+                      placeholder={`${profile?.address_line_2}`}
                       onChange={e => onChange(e)}
                       value={address_line_2}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -343,7 +343,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='city'
-                      placeholder={`${profile.city}`}
+                      placeholder={`${profile?.city}`}
                       onChange={e => onChange(e)}
                       value={city}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -362,7 +362,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='state_province_region'
-                            placeholder={`${profile.state_province_region}`}
+                            placeholder={`${profile?.state_province_region}`}
                             onChange={e => onChange(e)}
                             value={state_province_region}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -381,7 +381,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='zipcode'
-                            placeholder={`${profile.zipcode}`}
+                            placeholder={`${profile?.zipcode}`}
                             onChange={e => onChange(e)}
                             value={zipcode}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -400,7 +400,7 @@ const DashboardProfile =({
                     <input style={styleInput}
                       type="text"
                       name='phone'
-                            placeholder={`${profile.phone}`}
+                            placeholder={`${profile?.phone}`}
                             onChange={e => onChange(e)}
                             value={phone}
                       className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-md sm:text-sm border-gray-500"
@@ -420,7 +420,7 @@ const DashboardProfile =({
                             onChange={e => onChange(e)}
                             style = {{padding: "4px"}}
                         >
-                            <option value={country_region}>{profile.country_region}</option>
+                            <option value={country_region}>{profile?.country_region}</option>
                             {
                                 countries && countries.map((country, index) => (
                                     <option key={index} value={country.name}>{country.name}</option>

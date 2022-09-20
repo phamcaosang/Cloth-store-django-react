@@ -30,9 +30,8 @@ const Login = ({
 
   const onSubmit = e =>{
     e.preventDefault();
-    alert("Test")
     login(email, password, setActivated);
-    // setActivated(true);
+    setActivated(true);
   }
 
   if (activated)

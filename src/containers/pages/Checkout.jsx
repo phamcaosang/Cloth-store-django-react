@@ -126,7 +126,6 @@ const Checkout = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async() => {
       window.scrollTo(0,0)
-      await sleep(2000);
       await get_client_token();
       await get_shipping_options();
   }, [])
@@ -134,7 +133,6 @@ const Checkout = ({
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async() => {
-    await sleep(1000);
     if (coupon && coupon !== null && coupon !== undefined)
         await get_payment_total(shipping_id, coupon.name);
     else
