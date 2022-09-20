@@ -5,6 +5,7 @@ import {
     GET_ORDER_DETAIL_SUCCESS,
     GET_ORDER_DETAIL_FAIL
 } from './types';
+import { apiURI } from '../../helpers/requestServer';
 
 
 export const list_orders = () => async dispatch => {
@@ -17,7 +18,7 @@ export const list_orders = () => async dispatch => {
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/orders/get-orders`, config);
+            const res = await axios.get(`${apiURI}/api/orders/get-orders`, config);
 
             if (res.status === 200) {
                 dispatch({
@@ -48,7 +49,7 @@ export const get_order_detail = transactionId => async dispatch => {
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/orders/get-order/${transactionId}`, config);
+            const res = await axios.get(`${apiURI}/api/orders/get-order/${transactionId}`, config);
 
             if (res.status === 200) {
                 dispatch({

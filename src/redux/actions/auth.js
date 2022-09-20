@@ -22,6 +22,7 @@ import {
 import {AccessToken, RefreshToken} from "../../hocs/Token" 
 import { setAlert } from './alert';
 import axios from 'axios'
+import { apiURI } from '../../helpers/requestServer';
 
 export const check_authenticated = () => async dispatch => {
     if(AccessToken.token){
@@ -35,7 +36,7 @@ export const check_authenticated = () => async dispatch => {
         const body = JSON.stringify(AccessToken);
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/verify/`, body, config);
+            const res = await axios.post(`${apiURI}/auth/jwt/verify/`, body, config);
 
             if (res.status === 200) {
                 dispatch({
@@ -79,7 +80,7 @@ export const signup = (first_name, last_name, email, password, re_password) => a
     });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/`, body, config);
+        const res = await axios.post(`${apiURI}/auth/users/`, body, config);
         console.log("test_1")
         if (res.status === 201) {
             dispatch({
@@ -123,7 +124,7 @@ export const load_user = () => async dispatch => {
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
+            const res = await axios.get(`${apiURI}/auth/users/me/`, config);
         
             if (res.status === 200) {
                 dispatch({
@@ -165,7 +166,7 @@ export const login = (email, password, setActivated) => async dispatch => {
     });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config);
+        const res = await axios.post(`${apiURI}/auth/jwt/create/`, body, config);
         if (res.status === 200) {
             console.log("ok_1")
             dispatch({
@@ -220,7 +221,7 @@ export const activate = (uid, token) => async dispatch => {
     });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/activation/`, body, config);
+        const res = await axios.post(`${apiURI}/auth/users/activation/`, body, config);
     
         if (res.status === 204) {
             dispatch({
@@ -263,7 +264,7 @@ export const refresh = () => async dispatch => {
         console.log(body)
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/refresh/`, body, config);
+            const res = await axios.post(`${apiURI}/auth/jwt/refresh/`, body, config);
             console.log("test")
             if (res.status === 200) {
                 dispatch({
@@ -305,7 +306,7 @@ export const reset_password = (email) => async dispatch => {
     const body = JSON.stringify({ email });
 
     try{
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password/`, body, config);
+        const res = await axios.post(`${apiURI}/auth/users/reset_password/`, body, config);
         
         if (res.status === 204) {
             dispatch({
@@ -364,7 +365,7 @@ export const reset_password_confirm = (uid, token, new_password, re_new_password
         dispatch(setAlert('Passwords do not match', 'red'));
     } else {
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/reset_password_confirm/`, body, config);
+            const res = await axios.post(`${apiURI}/auth/users/reset_password_confirm/`, body, config);
         
             if (res.status === 204) {
                 dispatch({

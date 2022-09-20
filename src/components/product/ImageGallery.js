@@ -1,4 +1,5 @@
 import { Tab } from '@headlessui/react'
+import { apiURI } from '../../helpers/requestServer'
 
 // const product = {
 //     name: 'Zip Tote Basket',
@@ -66,7 +67,7 @@ const ImageGallery=({photos})=>{
                     {photos.length > 1 && photos.map(item => <>
                       <Tab key = {item.image} className="relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50">
                         <span className="absolute inset-0 rounded-md overflow-hidden">
-                              <img src={process.env.REACT_APP_API_URL + item.image} alt="" className="w-full h-full object-center object-cover" />
+                              <img src={apiURI + item.image} alt="" className="w-full h-full object-center object-cover" />
                         </span>
                       </Tab>
                     </>)}
@@ -76,7 +77,7 @@ const ImageGallery=({photos})=>{
                 { photos.map((item) => (
                   <Tab.Panel key={item.id}>
                     <img
-                      src={process.env.REACT_APP_API_URL + item.image}
+                      src={apiURI + item.image}
                       alt=""
                       className="w-full h-full object-center object-cover sm:rounded-lg"
                     />
@@ -87,7 +88,7 @@ const ImageGallery=({photos})=>{
             :
             <Tab.Panels className="w-full aspect-w-1 aspect-h-1">
                   <img
-                    src={process.env.REACT_APP_API_URL + photos[0].image}
+                    src={apiURI + photos[0].image}
                     alt=""
                     className="w-full h-full object-center object-cover sm:rounded-lg"
                   />

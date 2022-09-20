@@ -1,5 +1,6 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { apiURI } from '../../helpers/requestServer';
 import {
     ADD_ITEM,
     GET_TOTAL,
@@ -43,7 +44,7 @@ export const add_item = product => async dispatch => {
         console.log(body)
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/cart/add-item`, body, config);
+            const res = await axios.post(`${apiURI}/api/cart/add-item`, body, config);
 
             if (res.status === 201) {
                 dispatch({
@@ -111,7 +112,7 @@ export const get_items = () => async dispatch => {
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/cart/cart-items`, config);
+            const res = await axios.get(`${apiURI}/api/cart/cart-items`, config);
             if (res.status === 200) {
                 dispatch({
                     type: GET_ITEMS_SUCCESS,
@@ -144,7 +145,7 @@ export const get_total = () => async dispatch => {
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/cart/get-total`, config);
+            const res = await axios.get(`${apiURI}/api/cart/get-total`, config);
 
             if (res.status === 200) {
                 dispatch({
@@ -193,7 +194,7 @@ export const get_item_total = () => async dispatch => {
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/cart/get-item-total`, config);
+            const res = await axios.get(`${apiURI}/api/cart/get-item-total`, config);
 
             if (res.status === 200) {
                 dispatch({
@@ -239,7 +240,7 @@ export const update_item = (item, count) => async dispatch => {
         const body = JSON.stringify({ product_id, size, count});
 
         try {
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/api/cart/update-item`, body, config);
+            const res = await axios.put(`${apiURI}/api/cart/update-item`, body, config);
 
             if (res.status === 200 && !res.data.error) {
                 dispatch({
@@ -301,7 +302,7 @@ export const remove_item = item => async dispatch => {
         };
         console.log(body)
         try {
-            const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/cart/remove-item`, config);
+            const res = await axios.delete(`${apiURI}/api/cart/remove-item`, config);
 
             if (res.status === 200) {
                 dispatch({
@@ -358,7 +359,7 @@ export const empty_cart = () => async dispatch => {
         };
 
         try {
-            const res = await axios.delete(`${process.env.REACT_APP_API_URL}/api/cart/empty-cart`, config);
+            const res = await axios.delete(`${apiURI}/api/cart/empty-cart`, config);
 
             if (res.status === 200) {
                 dispatch({
@@ -408,7 +409,7 @@ export const synch_cart = () => async dispatch => {
     const body = JSON.stringify({ cart_items });
 
     try {
-        const res = await axios.put(`${process.env.REACT_APP_API_URL}/api/cart/synch`, body, config);
+        const res = await axios.put(`${apiURI}/api/cart/synch`, body, config);
 
         if (res.status === 201) {
             dispatch({

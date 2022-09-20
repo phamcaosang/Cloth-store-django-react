@@ -12,6 +12,7 @@ import {
     SET_PAYMENT_LOADING,
     REMOVE_PAYMENT_LOADING
 } from './types';
+import { apiURI } from '../../helpers/requestServer';
 
 
 export const get_payment_total = (shipping_id, coupon_name) => async dispatch => {
@@ -23,7 +24,7 @@ export const get_payment_total = (shipping_id, coupon_name) => async dispatch =>
     };
 
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment/get-payment-total?shipping_id=${shipping_id}&coupon_name=${coupon_name}`, config);
+        const res = await axios.get(`${apiURI}/api/payment/get-payment-total?shipping_id=${shipping_id}&coupon_name=${coupon_name}`, config);
 
         if (res.status === 200 && !res.data.error) {
             dispatch({
@@ -51,7 +52,7 @@ export const get_client_token = () => async dispatch => {
     };
 
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment/get-token`, config);
+        const res = await axios.get(`${apiURI}/api/payment/get-token`, config);
 
         if (res.status === 200) {
             dispatch({
@@ -110,7 +111,7 @@ export const process_payment = (
     });
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/payment/make-payment`, body, config);
+        const res = await axios.post(`${apiURI}/api/payment/make-payment`, body, config);
         if (res.status === 200 && res.data.success) {
             dispatch({
                 type: PAYMENT_SUCCESS

@@ -3,6 +3,7 @@ import {
     GET_SHIPPING_OPTIONS_SUCCESS,
     GET_SHIPPING_OPTIONS_FAIL
 } from './types';
+import { apiURI } from '../../helpers/requestServer';
 
 export const get_shipping_options = () => async dispatch => {
     const config = {
@@ -12,7 +13,7 @@ export const get_shipping_options = () => async dispatch => {
     };
 
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/shipping/get-shipping-options`, config);
+        const res = await axios.get(`${apiURI}/api/shipping/get-shipping-options`, config);
         if (res.status === 200) {
             dispatch({
                 type: GET_SHIPPING_OPTIONS_SUCCESS,

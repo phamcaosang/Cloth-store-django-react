@@ -6,6 +6,7 @@ import {
     UPDATE_USER_PROFILE_SUCCESS,
     UPDATE_USER_PROFILE_FAIL
 } from './types';
+import { apiURI } from '../../helpers/requestServer';
 
 export const get_user_profile = () => async dispatch => {
     if (localStorage.getItem('access')) {
@@ -17,7 +18,7 @@ export const get_user_profile = () => async dispatch => {
         };
 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/profile/user`, config);
+            const res = await axios.get(`${apiURI}/api/profile/user`, config);
 
             if (res.status === 200) {
                 dispatch({
@@ -67,7 +68,7 @@ export const update_user_profile = (
         });
 
         try {
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/api/profile/update`, body, config);
+            const res = await axios.put(`${apiURI}/api/profile/update`, body, config);
 
             if (res.status === 200) {
                 dispatch({

@@ -4,6 +4,8 @@ import {
     GET_CATEGORIES_FAIL,
 } from './types';
 
+import { apiURI } from '../../helpers/requestServer';
+
 
 export const get_categories = () => async dispatch => {
     const config = {
@@ -13,7 +15,7 @@ export const get_categories = () => async dispatch => {
     };
 
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/category/categories`, config);
+        const res = await axios.get(`${apiURI}/api/category/categories`, config);
     
         if (res.status === 200) {
             dispatch({
