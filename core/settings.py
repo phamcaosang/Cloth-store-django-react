@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = False
+DEBUG = True
 
 DOMAIN = os.environ.get('DOMAIN')
 
@@ -251,7 +251,7 @@ AUTH_USER_MODEL="user.UserAccount"
 EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
 
-if not DEBUG:
+if DEBUG:
     DEFAULT_FROM_EMAIL = 'Sama - Shopping Cloths <mail@sama.com>'
     EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = env('EMAIL_HOST')
