@@ -134,6 +134,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
+    "https://sama-cloth.onrender.com",
+    "https://django-shop.netlify.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
@@ -141,6 +143,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
+    "https://sama-cloth.onrender.com",
+    "https://django-shop.netlify.app",
 ]
 
 
@@ -249,16 +253,17 @@ BT_PRIVATE_KEY = os.environ.get('BT_PRIVATE_KEY')
 AUTH_USER_MODEL="user.UserAccount"
 
 EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+##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
+#api key
 
-
-if DEBUG:
+if not DEBUG:
     DEFAULT_FROM_EMAIL = 'Sama - Shopping Cloths <mail@sama.com>'
     EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = env('EMAIL_HOST')
     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
     EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
     EMAIL_PORT = env('EMAIL_PORT')
-    EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+    EMAIL_USE_TLS = True
 
     # # django-ckeditor will not work with S3 through django-storages without this line in settings.py
     # AWS_QUERYSTRING_AUTH = False

@@ -64,9 +64,16 @@ const ProductDetail =({
     const [loadLove, setLoadLove] = useState(false);
     const [size, setSize] = useState("m")
     const productSizes = ["s", "m", "l", "xl"]
+    const [formData, setFormData] = useState({
+      comment:'',
+      rating: 5,
+    })
+
+    const { comment, rating } = formData
     const user = useSelector(state => state.Auth.user)
     const listWish = useSelector(state => state.Wishlist.items)
     const relatedProduct = useSelector(state => state.Products.related_products)
+
     const addToCart = async () => {
       if (product && product !== null && product !== undefined && product.quantity > 0) {
           setLoading(true)
@@ -117,6 +124,15 @@ const ProductDetail =({
       setLoadLove(false)
     };
 
+    const refreshState = ()=>{
+      setSize("m")
+      setFormData({
+        comment:'',
+        rating: 5,
+      })
+      console.log("refresh")
+    }
+
     const navigate = useNavigate()
     const params = useParams()
     const productId = params.productId
@@ -125,25 +141,29 @@ const ProductDetail =({
     useEffect(async () => {
         window.scrollTo(0,0)
         let temp = await get_product(productId)
+        console.log("test", temp)
         if (temp){
-          await get_related_products(productId)
-          await get_wishlist_items()
-          await get_wishlist_item_total()
-          await get_reviews(productId)
+          get_related_products(productId)
+          get_wishlist_items()
+          get_wishlist_item_total()
+          get_reviews(productId)
+          user && await get_review(productId)
+          refreshState()
         } else{
           navigate("/")
         }
     }, [productId])
 
-    const [formData, setFormData] = useState({
-      comment:'',
-      rating: 5,
-    })
-
-    const { comment, rating } = formData
+    
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
-
+    const checkReview = (reviewObj)=>{
+      if (reviewObj === null){
+        return false
+      }
+      console.log("test")
+      return Object.keys(reviewObj).length !== 0
+    }
     const leaveReview = e => {
       e.preventDefault()
       if (rating !== null)
@@ -172,8 +192,8 @@ const ProductDetail =({
         filter_reviews(productId, numStars);
     };
 
-    const getReviews = () => {
-        get_reviews(productId);
+    const getReviews = async() => {
+        await get_reviews(productId);
     };
 
     return(
@@ -340,7 +360,7 @@ const ProductDetail =({
                       </div>
                   </div>
                   {
-                    review && isAuthenticated ? 
+                    checkReview(review) && isAuthenticated ? 
                     <form onSubmit={e => updateReview(e)}>
                     <div>
                       <label htmlFor="comment" className="block text-sm font-medium text-gray-700">
@@ -354,7 +374,7 @@ const ProductDetail =({
                           required
                           value={comment}
                           onChange={e=>onChange(e)}
-                          placeholder={review.comment}
+                          placeholder={"Your review"}
                           className="shadow-xl border-2 border-sky-500 px-2 py-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md"
                         />
                       </div>

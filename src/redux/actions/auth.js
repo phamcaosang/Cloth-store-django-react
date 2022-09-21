@@ -98,6 +98,7 @@ export const signup = (first_name, last_name, email, password, re_password) => a
             type: REMOVE_AUTH_LOADING
         });
     } catch (err) {
+        console.log(err.response)
         let error_data = err.response.data
         let key_error = Object.keys(error_data)[0]
         dispatch({

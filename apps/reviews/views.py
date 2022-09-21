@@ -135,13 +135,14 @@ class CreateProductReviewView(APIView):
                     {'error': 'Review for this course already created'},
                     status=status.HTTP_409_CONFLICT
                 )
-
+            print("ok")
             review = Review.objects.create(
                 user=user,
                 product=product,
                 rating=rating,
                 comment=comment
             )
+            print(review)
 
             if Review.objects.filter(user=user, product=product).exists():
                 result['id'] = review.id
