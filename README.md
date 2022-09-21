@@ -1,4 +1,4 @@
-## This is an full stack web application using ReactJs and Django rest Framework.
+## This is an full stack web application using ReactJs and Django rest Framework and Postgresql for database. The website is host using render.com platform.
 ## End users' functions include: Login, Register, Sorting, Searching, Add to Cart, Add to wish List, Review, Checkout, Edit profile, View history orders.
 ## Admin site utilizes of django admin by default
 ## Live at: https://sama-cloth.onrender.com/
